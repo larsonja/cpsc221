@@ -204,18 +204,19 @@ int main(int argc, char *argv[]) {
   while( !fin.eof() ) {
     getline(fin,line);
     lowercaseWords(line);
-	processLine(line)
-	lineCount++;
+	//processLine(line);
+	lineNum++;
 	if (lineNum % 40 == 0){ //gets the lineNumber
 		pageNum++; //gets the pageNumber
 	}
 	//should process shit in the line here
     istringstream iss(line, istringstream::in);
     while( iss >> word ) {
-    	Word createdWord = createWord(word,pageNum.to_string(),0) //create the word here with pages and height ** TODO: don't know where to get height from...
+    	Word* createdWord = createWord(word,"",0); //create the word here with pages and height ** TODO: don't know where to get height from...
     	addPage(createdWord, pageNum); //add page found at for createdWord
+    	slipList myList;
     	if (firstWord == 1){ //if first run, create the list
-    		skipList myList = createList(createdWord);
+    		slipList myList = createList(createdWord);
     		firstWord--; //increment count
     	}
     	else //else insert the word into the list
