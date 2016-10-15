@@ -48,6 +48,8 @@ struct slipList{
 	vector<Word> list;
 };
 
+//Don't need to destroy as when we exit the program is when we would delete this
+// so no need to do more work
 slipList* createList(Word firstWord){
 	slipList* result = (struct slipList*)malloc(sizeof(slipList));
 	result->list.resize(1);
@@ -79,14 +81,35 @@ int find(slipList* myList, string find){
 
 //Used to insert NEWWORD into the given list
 void insert(slipList* myList, Word newWord){
+	vector<Word> wordsToUpdate;
 	Word* baseWord = myList->list.data();
 	while(baseWord->word != newWord){
 		int h = baseWord->height;
-		while((baseWord->next[h] != NULL) && h > 0){
+		while((baseWord->next[h] != NULL) && h >= 0){
 			if (newWord.compare(baseWord->next[h]->word) < 0){
 				baseWord = baseWord->next[h]->word);
 			} else if (newWord.compare(baseWord->next[h]->word) = 0) {
-				//found it;
+				//found it
+				
+			} else {
+				//word is past where we want to go
+				if (h == 0){
+					Word* temp = wordsToUpdate.pop_back();
+					if((newWord.compare(temp) < 0 && newWord.compare(baseWord->word) > 0)){
+					//found where it needs to go
+						int height = 0;
+						while (height < newWord->height){//////////////////////////////
+							Word* p = new Word*;
+							*p = temp;
+							newWord->next.resize(newWord->next.size() + 1);
+							newWord.push_back(p);
+						}
+					} else {
+						wordsToUpdate.push_back(&temp);
+					}
+				}
+				wordsToUpdate.resize(wordsToUpdate.size() + 1);
+				wordsToUpdate.push_back(&baseWord);
 			}
 			h--;
 		}
