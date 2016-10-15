@@ -6,9 +6,12 @@
 #include <vector>
 #include <stdlib.h>
 #include <stdio.h>
+
 using namespace std;    
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+//WORD STRUCTURE AND FUNCTION CALLS/////////////////////////////////////////////////////////
+
+//Don't need to worry about this stuff right now
 struct Word{
 		string word;
 		int count;
@@ -40,7 +43,7 @@ string formatOutput(Word* myWord){
 	string result = myWord->word + " (" + to_string(myWord->count) + ") " + myWord->pages;
 	return result;
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+// SLIP LIST STRUCTURE AND FUNCTION CALLS //////////////////////////////////////////////////
 struct slipList{
 	vector<Word> list;
 };
@@ -52,35 +55,46 @@ slipList* createList(Word firstWord){
 	return result;
 }
 
-int findWordIndex(slipList* myList, string find){
-	auto iterator = myList->list.begin();
-	int i = 0;
-	string current = iterator->word;
-	
-	while(current != find && iterator != myList->list.end()){
-		advance(iterator, 1);
-		i++;
-		current = iterator->word;
+//Used to find the index FIND in the list given, if it's not there returns -1
+int find(slipList* myList, string find){
+	Word* baseWord = myList->list.data();
+	while(baseWord->word != newWord){
+		int h = baseWord->height;
+		while((baseWord->next[h] != NULL) && h > 0){
+			if (newWord.compare(baseWord->next[h]->word) < 0){
+				baseWord = baseWord->next[h]->word);
+			} else if (newWord.compare(baseWord->next[h]->word) = 0) {
+				//found it;
+			}
+			h--;
+		}
+		baseWord = baseWord->next[0];
 	}
-	if (current == find){
-		return i;
+	if (correctPoint != NULL){
+		return distance(myList->list.data(), correctPoint);
 	} else {
 		return -1;
 	}
 }
 
-bool insertWord(slipList* myList, Word newWord){
-	myList->list.resize(myList->list.size() + 1);
-	int indexAddAt = findWordIndex(myList, newWord.word);
-	if (indexAddAt == -1){
-		return false;
+//Used to insert NEWWORD into the given list
+void insert(slipList* myList, Word newWord){
+	Word* baseWord = myList->list.data();
+	while(baseWord->word != newWord){
+		int h = baseWord->height;
+		while((baseWord->next[h] != NULL) && h > 0){
+			if (newWord.compare(baseWord->next[h]->word) < 0){
+				baseWord = baseWord->next[h]->word);
+			} else if (newWord.compare(baseWord->next[h]->word) = 0) {
+				//found it;
+			}
+			h--;
+		}
+		baseWord = baseWord->next[0];
 	}
-	auto iterator = myList->list.begin();
-	advance(iterator, indexAddAt);
-	myList->list.emplace(iterator);
-	return true;
 }
 
+// Used to print a list to file
 void printToFile(slipList* myList, string fileName){
 	ofstream myFile;
 	myFile.open(fileName);
@@ -94,10 +108,8 @@ void printToFile(slipList* myList, string fileName){
 		i++;
 	}
 }
-	
-	
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // The following function should be moved into your skiplist.cc file when you
 // write that.  It implements the random bit generation.
@@ -144,14 +156,14 @@ int main(int argc, char *argv[]) {
     exit(1);
   }
 
-  ifstream fin;
+  ifstream fin;//input file name
   fin.open(argv[1]);
   if( !fin.is_open() ) {
     cerr << "Unable to open " << argv[1] << endl;
     exit(2);
   }
 
-  ofstream fout;
+  ofstream fout; //output file name
   fout.open(argv[2]);
   if( !fout.is_open() ) {
     cerr << "Unable to open " << argv[2] << endl;
@@ -162,6 +174,8 @@ int main(int argc, char *argv[]) {
   while( !fin.eof() ) {
     getline(fin,line);
     lowercaseWords(line);
+	processLine(line)
+	//should process shit in the line here
     istringstream iss(line, istringstream::in);
     while( iss >> word ) {
       print(fout, word);
