@@ -92,7 +92,8 @@ void insert(slipList* myList, Word newWord){
 				baseWord = baseWord->next[h]->word);
 			} else if (newWord.compare(baseWord->next[h]->word) = 0) {
 				//found it
-				
+				baseWord->next[h]->count = baseWord->next[h]->count + 1;
+				return;				
 			} else {
 				//word is past where we want to go
 				if (h == 0){
@@ -105,7 +106,11 @@ void insert(slipList* myList, Word newWord){
 								wordsToUpdate[h]->next[h] = p;
 								h++;
 						}
-						myList->list.emplace()
+						auto iterator = myList->list.begin();
+						while (iterator->word != newWord){
+							advance(iterator,1);
+						}
+						myList->list.emplace(iterator, newWord);
 					} else {
 						wordsToUpdate.push_back(&temp);
 					}
