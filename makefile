@@ -18,7 +18,7 @@ index : index.o
 # -g: put in debug information, for those of you who are using
 # debuggers (like gdb or ddd or xxgdb)
 index.o : index.cc
-	g++ -Wall -c -g index.cc
+	g++ -Wall -std=c++11 -g index.cc
 
 # and same idea for other .o files ...
 

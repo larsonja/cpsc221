@@ -3,25 +3,27 @@
 #include <sstream>
 #include <string>       // provides string class
 #include <cctype>       // provides isalpha() and tolower()
-
+#include <vector>
+#include <stdlib.h>
+#include <stdio.h>
 using namespace std;    
-    
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 struct Word{
 		string word;
 		int count;
 		string pages;
-		int height
+		int height;
 		vector<Word*> next;
 };
 
 Word* createWord(string n, string p, int h){
-	Word* result = malloc(sizeof(Word));
-	result.word = n;
-	result.count = 1;
-	result.pages = p;
-	result.height = h;
+	Word* result = (struct Word*)malloc(sizeof(Word));
+	result->word = n;
+	result->count = 1;
+	result->pages = p;
+	result->height = h;
+	return result;
 }
 
 void deleteWord(Word* toDelete){
@@ -29,47 +31,36 @@ void deleteWord(Word* toDelete){
 }
 
 void addCount(Word* myWord){
-	myWord.count = myWord.count + 1;
+	myWord->count = myWord->count + 1;
 }
 void addPage(Word* myWord, int pageNumber){
-	myWord.pages = myWord.pages + ',' + to_string(pageNumber);
+	myWord->pages = myWord->pages + ',' + to_string(pageNumber);
 }
 string formatOutput(Word* myWord){
-	string result = myWord.word + " (" + to_string(myWord.count) + ") " + pages;
+	string result = myWord->word + " (" + to_string(myWord->count) + ") " + myWord->pages;
 	return result;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 struct slipList{
 	vector<Word> list;
-}	
+};
+
 slipList* createList(Word firstWord){
-	slipList* result = malloc(sizeof(slipList));
-	result.resize(1);
-	result.push_back(firstWord);
+	slipList* result = (struct slipList*)malloc(sizeof(slipList));
+	result->list.resize(1);
+	result->list.push_back(firstWord);
 	return result;
 }
 
-bool insertWord(slipList* myList, Word newWord){
-	myList.list.resize(myList.list.size() + 1);
-	int indexAddAt = myList.list.findWordIndex(myList, newWord.word);
-	if (indexAddAt == -1){
-		return false;
-	}
-	auto iterator = myList.list.begin();
-	advance(iterator, indexAddAt);
-	myList.list.emplace(iterator);
-	return true;
-}
-
 int findWordIndex(slipList* myList, string find){
-	auto iterator = myList.list.begin();
+	auto iterator = myList->list.begin();
 	int i = 0;
-	string current = iterator.word;
+	string current = iterator->word;
 	
-	while(current != find && iterator != myList.list.end()){
+	while(current != find && iterator != myList->list.end()){
 		advance(iterator, 1);
 		i++;
-		current = iterator.word;
+		current = iterator->word;
 	}
 	if (current == find){
 		return i;
@@ -78,15 +69,29 @@ int findWordIndex(slipList* myList, string find){
 	}
 }
 
+bool insertWord(slipList* myList, Word newWord){
+	myList->list.resize(myList->list.size() + 1);
+	int indexAddAt = findWordIndex(myList, newWord.word);
+	if (indexAddAt == -1){
+		return false;
+	}
+	auto iterator = myList->list.begin();
+	advance(iterator, indexAddAt);
+	myList->list.emplace(iterator);
+	return true;
+}
+
 void printToFile(slipList* myList, string fileName){
 	ofstream myFile;
 	myFile.open(fileName);
-	auto iterator = myList.list.begin();
+	int i= 1;
+	auto iterator = myList->list.begin();
 	
-	while(iterator.hasNext()){
-		myFile<<iterator.formatOutput();
+	while( (unsigned) i <= (myList->list.size())){
+		myFile<<formatOutput(&(*iterator));
 		myFile<< '\n';
 		advance(iterator,1);
+		i++;
 	}
 }
 	
