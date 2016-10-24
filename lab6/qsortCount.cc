@@ -32,7 +32,7 @@ void quicksort(int a, int b) {
     
 	swap(x[a], x[p]);
 	
-    int m = a;
+        int m = a;
 	int i;
     
 	// in-place partition:

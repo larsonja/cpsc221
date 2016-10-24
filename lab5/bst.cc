@@ -122,7 +122,7 @@ bool delete_node(Node*& root, int key) {
      * PLEASE USE THE PREDECESSOR.)
      */
     Node* predecessor = target->left; //take the left branch
-    while(predecessor->right != NULL){ //while it has right branches
+    while(predecessor->right){ //while it has right branches
         predecessor = predecessor->right; //go down the right side
     }
     
@@ -130,11 +130,10 @@ bool delete_node(Node*& root, int key) {
     target->key = predecessor->key; //reassign target key
     
     if(parentOfPred->left == predecessor){ //now try the left side nodes
-        parentOfPred->left == predecessor->left; //if there's a left, take it
+        parentOfPred->left = predecessor->left; //if there's a left, take it
     } else {
         parentOfPred->right = predecessor->right; //otherwise it'll be the right
     }
-    delete predecessor; //no longer need temp anymore
   }
 
   // free target
@@ -175,10 +174,10 @@ int numNodes( Node* root ) {
   /**
    * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
    */
-  if (root != NULL){ //if not null, has more to count, so +1 and keep going
-      return 1 + numNodes(root->right) + numNodes(root->left);
-  } else { //nothing more to count and this doesn't exist so +0
-      return 0;
+  if (root == NULL){
+	return 0;
+  } else {
+	return (1 + numNodes(root->right) + numNodes(root->left));
   }
 }
 
@@ -192,12 +191,10 @@ int numLeaves( Node* root ) {
   if (root == NULL){
     return 0; //doesn't exist so doesn't count
   }
-  if (root->right == NULL && root->left == NULL){
-    return 1; //it's a leaf by definition
+  if (root->left == NULL && root->right == NULL){
+    return 1;
   }
-  //otherwise recurse past it
-  return numLeaves(root->right) + numLeaves(root->left);
-
+  return numLeaves(root->left) + numLeaves(root->right);
 }
 
 /**
@@ -209,18 +206,14 @@ int height( Node* x ) {
    */
     if (x == NULL){ //null is -1
         return -1;
-    }
-    if (x->right == NULL & x->left == NULL){ //plain node = 0
+   }
+    if (x->right == NULL && x->left == NULL){ //leaf = 0
         return 0;
     }
     int right = height(x->right); //get right and left heights
     int left = height(x->left);
     
-    if (left > right){ //use whichever is bigger to form the largest height
-        return 1 + left;
-    } else {
-        return 1 + right;
-    }
+    return 1 + (left <= right ? right : left);
     
 }
 
@@ -230,17 +223,14 @@ int height( Node* x ) {
 int depth( Node* root, Node* x ) {
   /**
    * THIS FUNCTION NEEDS TO BE IMPLEMENTED ********************
-   */
-    //like height but is relative
-    if (root == NULL || root == x){ //definition shows 0
+   */    
+    if (x == NULL){
         return 0;
     }
-    if (x->key > root->key){
-        return 1 + depth(x, root->right);
-    } else {
-        return 1 + depth(x, root-left);
+    if (x == root){
+	return 0;
     }
-
+    return (1 + (root->key > x->key ? depth(root, x->right) : depth(root, x->left)));
 }
 
 /**
@@ -363,11 +353,11 @@ void runTests(Node*& tree, std::vector<int> keys) {
 
   std::cout << "Testing Tree:" << std::endl;
   printTree(tree);
-  std::cout << std::endl;
-
-  unit.assertEquals("Number of nodes", 9, numNodes(tree));
+  
+  unit.assertEquals("Number of nodes", 9, numNodes(tree)); 
   unit.assertEquals("Number of leaves", 4, numLeaves(tree));
   unit.assertEquals("Height", 3, height(tree));
+  
 
   std::string h("height");
   std::string d("depth");
