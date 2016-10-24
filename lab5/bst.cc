@@ -121,6 +121,7 @@ bool delete_node(Node*& root, int key) {
      * its predecessor or its successor. To make the lab more easy to test,
      * PLEASE USE THE PREDECESSOR.)
      */
+   
     Node* predecessor = target->left; //take the left branch
     while(predecessor->right){ //while it has right branches
         predecessor = predecessor->right; //go down the right side
@@ -227,7 +228,7 @@ int depth( Node* root, Node* x ) {
     if (x == NULL){
         return 0;
     }
-    if (x == root){
+    if (root == x){
 	return 0;
     }
     return (1 + (root->key > x->key ? depth(root, x->right) : depth(root, x->left)));

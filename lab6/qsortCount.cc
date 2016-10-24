@@ -18,8 +18,8 @@ int randint(int a, int b) {
 
 int c (int  n){
     if(n > 1){
-        int r = randint(0,n-1);
-        return  n-1 + c(r) + c(n-r);
+        int p = randint(0, n-1);
+        return n-1 + c(p) + c(n-p-1);
     } else {
         return 0;
     }
