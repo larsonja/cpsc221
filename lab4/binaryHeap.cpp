@@ -55,7 +55,7 @@ void sort(int* heap, int size) {
 //POST: The first size elements of heap are printed as a tree
 void printHeap(int *heap, int size, int node=0, int d=0) {
     // TODO: put your code here for Questions 1 and 2
-    
+
     int leftChild = 2 * node + 1;
     int rightChild = 2 * node + 2;
 
@@ -75,46 +75,6 @@ void printHeap(int *heap, int size, int node=0, int d=0) {
     if (leftChild < size){
         printHeap(heap, size, leftChild, d+1);
     }
-
-
-/*
-    std::deque<string> printDeque;
-
-    int i=0;
-    int heapCount = 1;
-    int temp;
-    node = heap[0];
-   // printDeque.push_back(0);
-    cout << node <<endl;
-    d = 1; //heap is moved down 1 after printing root
-    for (i=1; i<size; i++){
-        if ((heap[i] > node) && (i%2 != 0)){
-            cout << std::setw(3*d)<< (heap[i]) << endl;
-            temp = i;
-            heapCount++;
-            if (heapCount > 2*d){
-                d++;
-                node = heap[temp];
-            }
-        }
-        else{
-            cout << std::setw(3*d) << (heap[i]) << endl;
-            heapCount++;
-            if (heapCount > 2*d){
-                d++;
-            }
-
-        }
-        
-
-    }
-    size = heapCount;
-*/
-    //for (std::deque<string>::iterator it = printDeque.begin(); it!=printDeque.end(); ++it){
-    //    cout << *it << end;
-    //}
-
-
 }
 
 //PRE:  heap points to an array representing a heap
@@ -124,6 +84,22 @@ void printHeap(int *heap, int size, int node=0, int d=0) {
 //	the heap and size is the new heap size.
 void remove(int* heap, int key, int & size) {
     // TODO: put your code for Question 3 here
+    int returnSize = size;
+    //cout << "Looking for " << key << endl;
+    for (int i =0; i< size; i++){
+        if (heap[i] == key){
+            heap[i] = heap[size-1];
+            returnSize--;
+            heapify(heap, returnSize);
+        }
+    }
+
+    if (heap[0] == key){
+        delete &heap[0];
+        size = 0;
+    }
+
+    size = returnSize;
 }
 
 //PRE:  heap1 and heap2 contain size1 and size2 elements respectively.
