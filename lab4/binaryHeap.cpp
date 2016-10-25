@@ -55,28 +55,25 @@ void sort(int* heap, int size) {
 //POST: The first size elements of heap are printed as a tree
 void printHeap(int *heap, int size, int node=0, int d=0) {
     // TODO: put your code here for Questions 1 and 2
-
-    std::deque<string> printDeque;
-
-    string nodeString;
-
+    
     int leftChild = 2 * node + 1;
     int rightChild = 2 * node + 2;
 
     if (size < 0) return;
 
-    for (int i =0; i< d; i++){
+    /*for (int i =0; i< d; i++){
         cout << '*';
-    }
+    }*/
 
-    cout << heap[node] << endl;
-
-    if (leftChild < size){
-        printHeap(heap, size, leftChild, d+1);
-    }
 
     if (rightChild < size){
         printHeap(heap, size, rightChild, d+1);
+    }
+
+    cout << std::setw(3*d) << heap[node] << endl;
+
+    if (leftChild < size){
+        printHeap(heap, size, leftChild, d+1);
     }
 
 
