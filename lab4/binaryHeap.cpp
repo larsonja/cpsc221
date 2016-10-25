@@ -107,7 +107,26 @@ void remove(int* heap, int key, int & size) {
 //      the elements in heap1 and heap2 (including duplicates).
 int* mergeHeap(int* heap1, int* heap2, int size1, int size2) {
     // TODO: replace the following line with your code for Question 4
-    return NULL;
+
+    int* heap = new int[size1 + size2];
+    int newHeapSize = 0;
+    int i,j;
+    for (i = 0; i< size1; i++){
+        heap[i] = heap1[i];
+        newHeapSize++;
+        heapify(heap, newHeapSize);
+    }
+
+    for (j = 0; j<size2; j++){
+        heap[i+j] = heap2[j];
+        newHeapSize++;
+        heapify(heap,newHeapSize);
+    }
+
+    //delete heap1;
+    //delete heap2;
+
+    return heap;
 }
 
 int input1[] = {8,3,5,6,2,9,1,7,4,0};
