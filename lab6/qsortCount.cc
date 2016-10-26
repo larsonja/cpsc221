@@ -25,6 +25,12 @@ int c (int  n){
     }
 }
 
+/*
+The value of C(n), returned by c(n) as a recurrence relation:
+c(n) = {a constant b if n<=1} //base case
+       {the summation from n to m of c(m-1) + c(n-m) if n>1 plus a constant b} //recursive case
+*/
+
 void quicksort(int a, int b) {
 	if (a >= b) return;
     
