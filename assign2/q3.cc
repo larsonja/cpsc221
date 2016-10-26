@@ -5,7 +5,7 @@ int bitsort(int *A, int n);
 
 using namespace std;
 int main (void){
-	int A[] = {1,1,1,0,0,0};
+	int A[] = {0,0,0,0,0,0};
 
 	for (int i =0; i < 6; i++){
 		cout << A[i] << ",";
@@ -28,6 +28,8 @@ int bitsort(int *A, int n) {
 int i=0;
 int j=n-1;
 while( i != j) {
+		cout << "I: " << i << " J: " << j << " I + J = " << i+j << endl;
+	//Invariant: (n-1) <= i+j <= (n-1)*2
 	if( A[i] == 0 ) {
 		i++;
 	} else if( A[j] == 1) {
