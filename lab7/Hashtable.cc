@@ -173,3 +173,14 @@ bool Hashtable::isPrime( int n, int divisor ){
     return isPrime( n, divisor + 2 ); 
 }
 
+
+
+/*
+
+3)
+a) small set sizes, with not many numbers to hash or with a very large hash proportional to the amount of things you wantt o hash
+b) It affects it quite a bit, depending on the scheme you use it can be as slow as linear, or even faster than quadratic
+c) similar to quadratic, once you start dealing with enough numbers to hash that you run into a lot of conflicts, more conflicts will end up pushing double ahead of quadratic
+d) I would probably use double if i knew the workload was going to be heavy, it it wasn't and just needed to work (ie preformance wasn't an issue) then linear is easiest to implement but will almost always be slower than the alternatives. In general i'd default to double or quadratic and probably end up staying away from linear because of how slow it is.
+
+*/
