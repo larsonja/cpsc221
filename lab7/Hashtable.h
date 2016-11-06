@@ -2,14 +2,13 @@
 #define HASHTABLE_H_
 
 #define EMPTY -1	// indicates an empty slot (so don't hash -1)
-#define ALT_PRIME 947 // other medium primes = 953, 967, 997, 12 161, 21 599
 
 class Hashtable {
 public:
 	Hashtable(int size);
 	~Hashtable();
 	int hash(int key);
-	int hasnAlt(int key);
+	int hashAlt(int key);
 	void qinsert(int key);
 	void linsert(int key);
 	void dinsert(int key);

@@ -101,4 +101,11 @@ it is an inplace sort as there aren't any other data structures we use other tha
 
 quicksort is not a stable sort, doesn't have the same output if the key is different
 
+
+
+The value of C(n), returned by c(n) as a recurrence relation:
+c(n) = {a constant b if n<=1} //base case
+       {the summation from n to m of c(m-1) + c(n-m) if n>1 plus a constant b} //recursive case
 */
+
+

@@ -61,7 +61,7 @@ int Hashtable::hash(int k) {
 }
 
 int Hashtable::hashAlt(int k) {
-	return abs(ALT_PRIME - (k % ALT_PRIME)) + 1 //will never be 0 as is required by slides
+	return ((this->_size >> 3) + 3) - (k % ((this->_size >> 3) + 3));
 }
 
 void Hashtable::qinsert(int k) {
@@ -80,17 +80,17 @@ void Hashtable::qinsert(int k) {
 	
 	int probe = hash(k);
 	int i = 1;
-	while(this->table[probe] != EMPTY && this->table[probe] != k){
-		if(i > this->m){ //Try as many times as there are spaces in the array, hopefully we find one
+	while(this->_table[probe] != EMPTY && this->_table[probe] != k){
+		if(i > this->_size){ //Try as many times as there are spaces in the array, hopefully we find one
 			_numFailures += 1; 
 			cout << "Warning: qinsert(" << k << ") found no EMPTY slot, so no insert was done." << endl; 
 			exit(-1);
 		}
-		probe = (probe + 2*i - 1) % this->m;
+		probe = (probe + 2*i - 1) % this->_size;
 		i++;
 	}
 	this->tallyProbes(i);
-	this->table[probe] = k;
+	this->_table[probe] = k;
 }
 
 void Hashtable::linsert(int k) {
@@ -101,17 +101,17 @@ void Hashtable::linsert(int k) {
     
 	int probe = hash(k);
 	int i = 1;
-	while(this->table[probe] != EMPTY && this->table[probe] != k){
-		if(i > this->m){ //Try as many times as there are spaces in the array, hopefully we find one
+	while(this->_table[probe] != EMPTY && this->_table[probe] != k){
+		if(i > this->_size){ //Try as many times as there are spaces in the array, hopefully we find one
 			_numFailures += 1; 
 			cout << "Warning: linsert(" << k << ") found no EMPTY slot, so no insert was done." << endl; 
 			exit(-1);
 		}
-		probe = (probe + 1) % this->m;
+		probe = (probe + 1) % this->_size;
 		i++;
 	}
 	this->tallyProbes(i);
-	this->table[probe] = k;
+	this->_table[probe] = k;
 }
 
 void Hashtable::dinsert(int k) {
@@ -120,26 +120,21 @@ void Hashtable::dinsert(int k) {
 	// and also implement a second hash function.
 
     // ************* ADD YOUR CODE HERE *******************
-    
-    int probe = hash(k);
+
+	int probe = hash(k);
 	int probeAlt = hashAlt(k);
 	int i = 1;
-	while(this->table[probe] != EMPTY && this->table[probe] != k){
-		if(i > this->m){ //Try as many times as there are spaces in the array, hopefully we find one
+	while(this->_table[probe] != EMPTY && this->_table[probe] != k){
+		if(i > this->_size){ //Try as many times as there are spaces in the array, hopefully we find one
 			_numFailures += 1; 
 			cout << "Warning: dinsert(" << k << ") found no EMPTY slot, so no insert was done." << endl; 
 			exit(-1);
 		}
-		probe = (probe + probeAlt) % this->m;
+		probe = (probe + probeAlt) % this->_size;
 		i++;
 	}
 	this->tallyProbes(i);
-	this->table[probe] = k;
-    
-    // Your method should return after it stores the value in an EMPTY slot 
-    // and calls tallyProbes, so if it gets here, it didn't find an EMPTY slot 
-    _numFailures += 1; 
-    cout << "Warning: dinsert(" << k << ") found no EMPTY slot, so no insert was done." << endl; 
+	this->_table[probe] = k;    
 }
 
 void Hashtable::print() {
