@@ -59,7 +59,7 @@ void printHeap(int *heap, int size, int node=0, int d=0) {
     int leftChild = 2 * node + 1;
     int rightChild = 2 * node + 2;
 
-    if (size < 0) return;
+    if (size <= 0) return;
 
     /*for (int i =0; i< d; i++){
         cout << '*';
