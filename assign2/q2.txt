@@ -1,0 +1,14 @@
+int findPar(string s, i=0){
+    if (s[i] == NULL){
+        return;
+    }
+    if (s[i] == ')'){
+        return 1 + findPar(s, i++);
+    }
+    if (s[i] == '('){
+        return -1 + findPar(s, i++);
+    }
+    else{
+        return findPar(s, i++);
+    }
+}
