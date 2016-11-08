@@ -1,0 +1,18 @@
+a)
+m = 2^16-1 = 0b1111 1111 1111 1111
+h(s) = (s0 + s1*256 + s2*256^2 + ....) mod m
+
+Given 3 characters, and 1 byte per character (8 bits), we get 256*256*256 different possibliities, or 16 777 216.
+Because we're using staic hashing with m = 2^16-1 we have a set numbr of possible hashes, or 65 535.
+By the pidgeon hole principal of there being over 256 times as many input strings as there are hashes,
+there must exist at least 257 hash collisions.
+
+
+b)
+Similar to the previous answer, anagrams of strings ocasionally will return different numbres, which are different multiples of 256 but have have the same remainder, that is, (a + (b*256) + (c*256^2) + (d*256^3)) is different numbers when a = 65, b = 66, c = 67, and d = 68 and a = 67, b = 68, c = 65, d = 66 but when you take the mod 255 of them they return the same number, 11. The basic idea is to find different orderings of the numbers where the lowest denomination is the most important when changing the result of the mod. For example, if we take out the A term, and only have b,c,d and we use the numbers 2,3,4 we'll get the same result no matter the positioning of the numbers.
+We'll therefore want to be careful of what we choose our least significant bit to be when we're trying to calculate permutations of strings which has to the same value.
+IE) ABCD, ACDB, ACBD, ADBC, ADCD, ABDC all are collisions
+as are BCDA, BCAD, BDAC, BDCA, BADC, BACD, BCAD, etc.
+
+
+Used wolfram alpha to help compute different hashes according to the formula, also consulted the notes/wiki page on hashing
