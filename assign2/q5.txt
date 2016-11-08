@@ -13,3 +13,6 @@ Similar to the previous answer, anagrams of strings ocasionally will return diff
 We'll therefore want to be careful of what we choose our least significant bit to be when we're trying to calculate permutations of strings which has to the same value.
 IE) ABCD, ACDB, ACBD, ADBC, ADCD, ABDC all are collisions
 as are BCDA, BCAD, BDAC, BDCA, BADC, BACD, BCAD, etc.
+
+
+Used wolfram alpha to help compute different hashes according to the formula, also consulted the notes/wiki page on hashing
