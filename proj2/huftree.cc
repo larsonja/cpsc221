@@ -18,6 +18,7 @@ class Node{
         void setFreq(int frequency) {this->freq = frequency;}
         int getFreq(void) {return this->freq;}
         int getChar(const Node& node) {return this->character;}
+        int getCharacter() {return character;}
         
 };
 

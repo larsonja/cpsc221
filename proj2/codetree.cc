@@ -1,6 +1,12 @@
 #include <vector>
+#include <iostream>
+#include "huftree.cc"
 
 using namespace std;
+
+
+//function prototype
+void printChar( int ch );
 
 class CodeTree {
     
@@ -8,24 +14,26 @@ class CodeTree {
 	std::vector<Node> v;
 
   public:
-    void printTree ();
+    void printTree (std::vector<Node> v, int length, int node=0, int d=0);
     void printCode ();
     void addNode (Node nodeToAdd);
+    CodeTree(int * freq);
 };
+
 
 CodeTree::CodeTree (int* freq){
 	freqArray = freq;
 }
 
-void addNode (Node nodeToAdd){
-	v.pushback(nodeToAdd);
+void CodeTree::addNode (Node nodeToAdd){
+	v.push_back(nodeToAdd);
 }
 
-//function prototype
-void printChar( int ch );
 
+void CodeTree::printTree(std::vector<Node> v, int length, int node, int d){
+	int size = v.size();
 
-void printTree(){
+	//int node = 0; //temp val for node for now
 
  	int leftChild = 2 * node + 1;
     int rightChild = 2 * node + 2;
@@ -38,19 +46,19 @@ void printTree(){
 
 
     if (rightChild < size){
-        printHeap(heap, size, rightChild, d+1);
+        printTree(v, v.size(), rightChild, d+1);
     }
 
-    cout << std::setw(3*d) << heap[node] << endl;
+    //cout << std::setw(3*d) << v[node] << endl;
 
     if (leftChild < size){
-        printHeap(heap, size, leftChild, d+1);
+        printTree(v, v.size(), leftChild, d+1);
     }
 
 }
 
 
-void printCode() {
+void CodeTree::printCode() {
 /*
 	int highestCount = 0;
 	int charNum = 0; 
@@ -75,36 +83,37 @@ void printCode() {
 
 	int binNumber = 00;
 
-	for (int count=0; count < v.length(); count ++){
-		std::cout << printChar(v[count]->character) << ":" << binNumber << endl;
+	for (int count=0; count < v.size(); count ++){
+		printChar(v[count].getCharacter());
+		std::cout << ":" << binNumber << endl;
 		binNumber++;
 	}
 }
 
 
-void gToLSort(int[] arrayToSort){
+void gToLSort(int arrayToSort[], int size){
 
-	for (int z = 0; z < arrayToSort.length(); z++){
+	for (int z = 0; z < size; z++){
 		std::cout << arrayToSort[z];
 	}
 	std::cout << endl;
 
 	int i, j;
 	int first, temp;
-	int length = arrayToSort.length();
+	int length = size;
 
-	for (i = numLength - 1; i > 0; i--){
+	for (i = length - 1; i > 0; i--){
 		first = 0;
 		for (j=1; j<i; j++){
-			if (num[j]<num[first])
+			if (arrayToSort[j]<arrayToSort[first])
 			first=j;
 		}
-		temp = num[first];
-		num[first] = num[i];
-		num[i] = temp;
+		temp = arrayToSort[first];
+		arrayToSort[first] = arrayToSort[i];
+		arrayToSort[i] = temp;
 	}
 
-	for (int z = 0; z < arrayToSort.length(); z++){
+	for (int z = 0; z < size; z++){
 		std::cout << arrayToSort[z];
 	}
 	std::cout << endl;
