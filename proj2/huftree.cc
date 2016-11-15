@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 #include "codetree.h"
+#include "codetree.cc"
 #include <iomanip>
 #include <string>
 #include <deque>
