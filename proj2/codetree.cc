@@ -1,7 +1,8 @@
+#ifndef CODE_TREE_H
+#define CODE_TREE_H
 #include <vector>
 #include <iostream>
 #include "huftree.cc"
-
 using namespace std;
 
 
@@ -133,3 +134,4 @@ void printChar( int ch ) {
 	}
 }
 
+#endif
