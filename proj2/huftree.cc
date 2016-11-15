@@ -1,29 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <algorithm>
-#include <vector>
-//#include "codetree.cc"
-#include <iomanip>
-#include <string>
-#include <deque>
-
-using namespace std;
-
-class Node{
-    private:
-        int character; //ASCII code of the char
-        int freq; //frequency at which is appears
-    public:
-        void setChar(int charCode) {this->character = charCode;}
-        void setFreq(int frequency) {this->freq = frequency;}
-        int getFreq(void) {return this->freq;}
-        int getChar(const Node& node) {return this->character;}
-        int getCharacter() {return character;}
-        
-};
-
+#include "huftree.h"
 //
-void heapify(vector<Node> heap, int i) {
+void heapify(std::vector<Node> heap, int i) {
     int left = 2*i;
     int right = 2*i + 1;
     int largest = i;
@@ -45,7 +22,7 @@ void heapify(vector<Node> heap, int i) {
     }
 }
 
-void heapUp(vector<Node> heap, int index){
+void heapUp(std::vector<Node> heap, int index){
     if (index == 0) return;
     int iF = heap[index].getFreq();
     int jF = heap[(index-1)/2].getFreq();
@@ -56,7 +33,7 @@ void heapUp(vector<Node> heap, int index){
     }
 }
 
-void insert(vector<Node> heap, Node toInsert){
+void insert(std::vector<Node> heap, Node toInsert){
     heap.push_back(toInsert);
     heapUp(heap, heap.size() - 1);
 }
@@ -83,9 +60,34 @@ int main (int argc, char* argv[]) {
 
     fin.close();
   }
-  
-  CodeTree ct = CodeTree( freq );
 
+  int numChars = 0;
+  std::vector<Node> vectorOfNodes;
+
+  for (int i=0; i<256; i++){
+        if (freq[i] > 0){
+            node i;
+            i.setChar(i);
+            i.setFreq(freq[i]);
+            vectorOfNodes.push_back(i);
+            numChars++;
+        }
+
+  }
+
+  for (int i=0; i< numChars; i++){
+    heapify(vectorOfNodes, i);
+  }
+
+//idea is to have a vector of nodes (where each node contains the character and its frequency)
+//then with the list we are able to put them in the order using heapify etc.
+//then the first character will be the one that is our 00 and the next will be 01 and so forth
+//we then can print the code and from there construct our tree and print tree etc.
+
+
+  CodeTree ct;
+  ct.setVector(vectorOfNodes);
+  ct.addFreqArray(freq);
   ct.printTree();
   ct.printCode();
 
