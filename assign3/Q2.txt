@@ -1,0 +1,22 @@
+A room contains 6 computers. Each computer is directly connected to 0 or more
+of the other computers in the room. Show that there are at least two computers in the room
+that are directly connected to the same number of other computers.
+Hint: You might first try the problem assuming each computer is directly connected to 1 or
+more of the other computers.
+
+
+Pigeon Hole Principle with Maps:
+Proof by Induction:
+Let there be a graph with only 2 nodes has either 0 or 1 edges, and both of the nodes will have the same degree (number of connections)
+
+If we assume this holds for n nodes and that there are two or more of these nodes with the same degree.
+If we take this existing graph with n nodes and at most n-1 different degrees (and any possible lower value excluding one number from 0->n-1 for the pair to occur).
+If we add one more node and continually add it's edges while examining it; if we leave it at degree 0, the pair that was existing will continue to exist and thus at least one pair remainds.
+If when we add this edge we add it to one with a unique degree, then an existing pair of verticies with equal degrees will remain intact as we will have created a new pairing.
+If ween we add the edge we connect it to a member of a pair with the same degree then if there is another pair then the pair will remain.
+If however, that was the only pair, then the list of degrees of the previous graph had one of two elements missing: the maximum number (n+1) or some other number.
+    If it was d+1 that was missing, we now have a pair with degree 1.
+    If it was some other degree then we will now have a pair with degree n-1.
+    
+No matter which situation we add the node's edges in, we will always retain at least one pairing of nodes with the same degree. 
+Thus with 6 computers in the room and some number of connections >= 0 we will always have at least a pair of computers with the same number of connections

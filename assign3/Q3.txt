@@ -1,0 +1,35 @@
+Let N(h) be the smallest number of nodes in an AVL tree of height h. For example,
+N(0) = 1 and N(1) = 2. Prove that N(h) = F(h + 3) − 1 where F(i) is the ith Fibonacci
+number (F(0) = 0, F(1) = 1, and F(i) = F(i − 1) + F(i − 2)). To do this, you need to come
+up with a recurrence relation that defines N(h) and argue why it is correct. Then you need
+to prove, by induction, that N(h) = F(h + 3) − 1.
+
+First few Node numbers: 1,2,4,7,12,20 (found online)
+First few Fib numbers: 0,1,1,2,3,5,8,13
+N(0) = F(3) - 1 = 1 - 1 : True
+N(1) = F(4) - 1 = 3 - 1 : True
+N(2) = F(5) - 1 = 5 - 1 : True
+N(3) = F(6) - 1 = 8 - 1 : True
+N(4) = F(7) - 1 = 13- 1 : True
+--> I believe it.
+
+Recurance relation:
+N(1) = 1
+N(2) = 2
+N(x) = N(x-1) + N(x-2) + 1 
+    for x >= 3
+
+Proof by Induction:
+Take 
+N(1) = 1
+N(2) = 2
+where we can express our base bases:
+N(1) = F(3) - 1
+N(2) = F(4) - 1
+Assume that N(x) = F(x+3) - 1 holds for some x and N(x+1) = F(x+4) - 1 also holds (can make assumption because we have the 2 base cases).
+We then get:
+N(x+2) = F(x) + F(x+1) + 1
+N(x+2) = F(x+3) - 1 + F(x+4) - 1 + 1 (expanding out)
+N(x+2) = F(x+3) + F(x+4) - 1 (grouping similar terms)
+N(x+2) = F(x+5) - 1 (reduce F(x+3) + F(x+4) into F(x+5) by the fib. sequencing)
+So it holds true that N(x) = F(x+3) - 1
