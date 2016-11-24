@@ -1,37 +1,23 @@
-#ifndef CODE_TREE_H
-#define CODE_TREE_H
-#include <vector>
-#include <iostream>
-#include "huftree.cc"
-using namespace std;
+#include "codetree.h"
 
-
-//function prototype
-void printChar( int ch );
-
-class CodeTree {
-    
-	int* freqArray;
-	std::vector<Node> v;
-
-  public:
-    void printTree (std::vector<Node> v, int length, int node=0, int d=0);
-    void printCode ();
-    void addNode (Node nodeToAdd);
-    CodeTree(int * freq);
-};
-
-
-CodeTree::CodeTree (int* freq){
+void CodeTree::addFreqArray(int* freq){
 	freqArray = freq;
 }
 
-void CodeTree::addNode (Node nodeToAdd){
+void CodeTree::setVector(std::vector<Node> v){
+	v = vector;
+}
+
+void CodeTree::addNode(Node nodeToAdd){
 	v.push_back(nodeToAdd);
 }
 
+void CodeTree::printTree(){
+	//print tree wrapper
+	printTree2(v,v.size(),0,0);
+}
 
-void CodeTree::printTree(std::vector<Node> v, int length, int node, int d){
+void CodeTree::printTree2(std::vector<Node> v, int length, int node, int d){
 	int size = v.size();
 
 	//int node = 0; //temp val for node for now
@@ -82,11 +68,11 @@ void CodeTree::printCode() {
 
 	*/
 
-	int binNumber = 00;
+	int binaryNumber = 00000;
 
 	for (int count=0; count < v.size(); count ++){
 		printChar(v[count].getCharacter());
-		std::cout << ":" << binNumber << endl;
+		std::cout << ":" << binaryNumber << endl;
 		binNumber++;
 	}
 }
@@ -134,4 +120,3 @@ void printChar( int ch ) {
 	}
 }
 
-#endif
