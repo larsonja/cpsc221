@@ -125,7 +125,7 @@ void Hashtable::dinsert(int k) {
 	int probeAlt = hashAlt(k);
 	int i = 1;
 	while(this->_table[probe] != EMPTY && this->_table[probe] != k){
-		if(i > this->_size){ //Try as many times as there are spaces in the array, hopefully we find one
+		if(i > this->_size){
 			_numFailures += 1; 
 			cout << "Warning: dinsert(" << k << ") found no EMPTY slot, so no insert was done." << endl; 
 			exit(-1);

@@ -9,10 +9,10 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 	int n = atoi(argv[1]);
-	for(int i = 1; i <= n/3; i++) {
-		cout << "I " << n << endl;
-		cout << "F " << n << endl;
-		cout << "R " << n << endl;
+	for(int i = 1; i <= 1; i++) {
+		cout << "I 25" << endl;
+		cout << "F 25" << endl;
+		cout << "R 25" << endl;
 	}
 	return 0;
 }
