@@ -1,0 +1,20 @@
+mapping.txt -> csv with each ## mys and type listed
+2 generators -> generator0.cc and generator1.cc
+	both accept a single int input with outputs approximately n dictionary operations
+readme -> name and stuff
+
+
+Types of dictionaries
+• mtf: Unsorted linked list with move-to-front on find.
+• sl: Sorted vector (i.e., resizing array)
+• hch : Hashtable with chaining (fixed size 10000)
+• hqp: Hashtable with double hashing (resizing)
+• bstT: Binary search tree with tombstones
+• avl: AVL tree
+• spt: Splay tree
+
+look them up to learn them
+
+./generator0 1200 | ./dict_runner - 10 . -mys01 -mys02 -mys03
+runs 1200 operations through generator and passes it through the dict runner exe thingie and outputs a file
+	file lists # of ops, then amount of time steps
