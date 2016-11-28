@@ -284,6 +284,26 @@ void findStatsHelper(Node * root, double &avg, double &var, int &count) {
 
   // ************ TODO: Implement this! *************
 
+	if (root == NULL) {
+    avg = 0; var = 0; count = 0;
+    return;
+  }
+
+  int lcount,rcount;
+  double lavg, ravg, lvar, rvar;
+  Node * left_search = root->left;
+  Node * right_search = root->right;
+
+  while ((getHeight(root) + getHeight(left_search) + getHeight(right_search) >= 1100)){
+  	findStatsHelper(left_search, lavg, lvar, lcount);
+  	findStatsHelper(right_search, ravg, rvar, rcount);
+  	}
+
+  	 updateStats(root->value,
+              lavg, lvar, lcount,
+              ravg, rvar, rcount,
+              avg, var, count);
+	
 }
 
 // Parallel version of findStatsSequential
