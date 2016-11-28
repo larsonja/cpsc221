@@ -12,7 +12,7 @@
 #define REPETITIONS 10		// Number of times we repeat the task.
 
 // ************* TODO: Pick a better cutoff value. *************
-int SEQUENTIAL_CUTOFF = 0;	// Default height at which we switch from
+int SEQUENTIAL_CUTOFF = 10;	// Default height at which we switch from
                                 // parallel to sequential code
 
 typedef std::string KType;   // The datatype for the key of the AVL tree Node
@@ -283,7 +283,32 @@ void findStatsSequential(Node * root, double &avg, double &var, int &count) {
 void findStatsHelper(Node * root, double &avg, double &var, int &count) {
 
   // ************ TODO: Implement this! *************
+  if (root == NULL){
+    return;
+  }
+  if (root->height <= SEQUENTIAL_CUTOFF){
+    return findStatsSequential(root, avg, var, count);
+  }
 
+  double lword, rword;
+  int lmax = count;
+  int rmax = count;
+
+  #pragma omp task untied shared(lword, lmax){
+    findStatsHelper(root->left, avg, lword, lmax);}
+    findStatsHelper(root->right, avg, rword, rmax);
+  #pragma omp taskwait
+
+  if (rmax > lmax && rmax > root->value){
+    word = rword;
+    count = rmax;
+  } else if {
+    word = lword;
+    count = lmax;
+  } else {
+    word = root->key;
+    count = root->value;
+  }
 }
 
 // Parallel version of findStatsSequential
