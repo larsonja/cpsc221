@@ -12,7 +12,7 @@
 #define REPETITIONS 10		// Number of times we repeat the task.
 
 // ************* TODO: Pick a better cutoff value. *************
-int SEQUENTIAL_CUTOFF = 10;	// Default height at which we switch from
+int SEQUENTIAL_CUTOFF = 1100;	// Default height at which we switch from
                                 // parallel to sequential code
 
 typedef std::string KType;   // The datatype for the key of the AVL tree Node
@@ -283,33 +283,34 @@ void findStatsSequential(Node * root, double &avg, double &var, int &count) {
 void findStatsHelper(Node * root, double &avg, double &var, int &count) {
 
   // ************ TODO: Implement this! *************
+  
+  if (root->height <= SEQUENTIAL_CUTOFF){
+    return findStatsSequential(root, avg, var, count);
+}
   if (root == NULL){
     return;
   }
-  if (root->height <= SEQUENTIAL_CUTOFF){
-    return findStatsSequential(root, avg, var, count);
-  }
 
-  double lword, rword;
-  int lmax = count;
-  int rmax = count;
+  double lvar = var;
+  double rvar = var;
+  int lcount = count;
+  int rcount = count;
+  double ravg = avg;
+  double lavg = avg;
 
-  #pragma omp task untied shared(lword, lmax){
-    findStatsHelper(root->left, avg, lword, lmax);}
-    findStatsHelper(root->right, avg, rword, rmax);
+  #pragma omp task shared(lavg, lvar, lcount) untied
+  { findStatsHelper(root->left, lavg, lvar, lcount);}
+    findStatsHelper(root->right, ravg, rvar, rcount);
   #pragma omp taskwait
 
-  if (rmax > lmax && rmax > root->value){
-    word = rword;
-    count = rmax;
-  } else if {
-    word = lword;
-    count = lmax;
-  } else {
-    word = root->key;
-    count = root->value;
-  }
+    updateStats(root->value,
+              lavg, lvar, lcount,
+              ravg, rvar, rcount,
+              avg, var, count);
+    
 }
+
+
 
 // Parallel version of findStatsSequential
 void findStats(Node * root, double &avg, double &var, int &count) {
