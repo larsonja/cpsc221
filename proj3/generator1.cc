@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 	int n = atoi(argv[1]);
-	for(int i = 1; i <= 1; i++) {
+	for(int i = 1; i <= n; i++) {
 		cout << "I 25" << endl;
 		cout << "F 25" << endl;
 		cout << "R 25" << endl;
