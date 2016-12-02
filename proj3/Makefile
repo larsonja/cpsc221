@@ -1,4 +1,4 @@
-all : 
+all :
 	g++ -Wall -g -std=c++11 generator0.cc -o generator0
 	g++ -Wall -g -std=c++11 generator1.cc -o generator1
 	g++ -Wall -g -std=c++11 generator2.cc -o generator2
